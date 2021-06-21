@@ -1,5 +1,12 @@
-.nav-list {
+body {
     margin: 0;
+    padding: 0;
+}
+.nav-bar {
+    background: rgba(0,0,0,.75);
+}
+.nav-list {
+    margin: 0 1em;
     padding: 0;
     list-style: none;
     display: flex;
@@ -16,9 +23,6 @@
 .nav-search-box input {
     height: 1em;
 }
-/* body > div > ul > li:nth-child(1) {
-    margin-left: auto;
-} */
 body > div > ul > li:nth-child(2) {
     margin-left: 1em;
 }
