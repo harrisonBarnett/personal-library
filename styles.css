@@ -1,0 +1,24 @@
+.nav-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+.nav-search-box {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+.nav-search-box p {
+    margin-left: 1em;
+}
+.nav-search-box input {
+    height: 1em;
+}
+/* body > div > ul > li:nth-child(1) {
+    margin-left: auto;
+} */
+body > div > ul > li:nth-child(2) {
+    margin-left: 1em;
+}
