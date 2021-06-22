@@ -6,6 +6,7 @@ body {
 /* NAV BAR==================================*/
 .nav-bar {
     background: rgba(0,0,0,.75);
+    box-shadow: 1px 1px 10px rgba(0,0,0,.5);
 }
 .nav-list {
     margin: 0 1em;
@@ -36,6 +37,35 @@ body > div > ul > li:nth-child(2) {
     margin-left: 1em;
 }
 /* end nav bar=============================== */
+
+/* FORM CONTAINER =========================== */
+.form-container {
+    position: absolute;
+    z-index: 1;
+    background: rgba(0,0,0,.75);
+}
+form {
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+form button {
+    padding: .5em 1em;
+    font-family: monospace;
+}
+form input,
+form label,
+form button,
+.unread-group,
+.read-group {
+    margin: .25em 1em .25em 1em;
+    outline: none;
+    border: none;
+}
+#show-hide-toggle {
+    display: none;
+}
+/* end form container ======================= */
 
 /* TITLE ==================================== */
 .title-group {
@@ -69,6 +99,10 @@ body > div > ul > li:nth-child(2) {
 }
 /* end search group ========================== */
 
+/* BOOK CARD ================================= */
+.book-container {
+    margin-top: 25vh;
+}
 .book-card {
     width: 150px;
     height: 200px;
@@ -91,7 +125,8 @@ body > div > ul > li:nth-child(2) {
 .remove-book-button {
     margin-left: 1em;
 }
-.book-card button {
+.remove-book-button,
+.unread-status-button {
     width: 120px;
     border: none;
     height: 2em;
@@ -100,3 +135,14 @@ body > div > ul > li:nth-child(2) {
     color: white;
     cursor: pointer;
 }
+/* style applied if  */
+.read-status-button {
+    width: 120px;
+    border: none;
+    height: 2em;
+    margin: auto auto .5em auto;
+    background: rgba(82, 208, 231, 0.75);
+    color: white;
+    cursor: pointer;
+}
+/* end book card ============================= */
