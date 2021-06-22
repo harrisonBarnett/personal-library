@@ -11,13 +11,33 @@
     
     <div class="nav-bar">
         <ul class="nav-list">
-            <li class='nav-add-button'>Add</li>
-            <li class='nav-list-button'>List</li>
+            <li class='nav-add-button' onclick="toggleAddForm()">Add</li>
+            <li class='nav-list-button' onclick="displayAll()">List</li>
             <div class="nav-search-box">
                 <input type="text" class="nav-search-box-input">
                 <p class="nav-search-button">X</p>
             </div>
         </ul>
+    </div>
+
+    <div class="form-container" id="show-hide-toggle">
+        <form>
+            <label for="title">Title</label>
+            <input type="text" class="add-title" name="title">
+            <label for="author">Author</label>
+            <input type="text" class="add-author" name="author">
+            <label for="year">Year</label>
+            <input type="text" class="add-year" name="year">
+            <div class="read-group">
+                <input type="checkbox" class="add-read" name="read">
+                <label for="read">Read</label>
+            </div>
+            <div class="unread-group">
+                <input type="checkbox" class="add-unread" name="unread">
+                <label for="unread">Not read</label>
+            </div>
+            <button class="add-book-submit" onclick="addBook()">Add book</button>
+        </form>
     </div>
 
     <div class="title-group">
@@ -31,12 +51,11 @@
         <button class="search-button">Search</button>
     </div>
 
-    <div class="book-card">
-        <p class="book-title">Title</p>
-        <p class="book-author">Author</p>
-        <p class="year">Year</p>
-        <button class="remove-book-button">Remove</button>
+    <div class="book-container" id="book-container">
+        <!-- books will be displayed in a column here -->
     </div>
+
+<script src="index.js"></script>
 
 </body>
 </html>
