@@ -16,6 +16,7 @@ body {
 }
 .nav-list li {
     color: white;
+    cursor: pointer;
 }
 .nav-search-box {
     display: flex;
@@ -27,6 +28,7 @@ body {
     color: white;
 }
 .nav-search-box input {
+    outline: none;
     height: 1em;
     border: none;
 }
@@ -55,10 +57,46 @@ body > div > ul > li:nth-child(2) {
     color: white;
     font-family: monospace;
 }
+.search-box input,
+.search-box button {
+    margin: 0 1em;
+}
 .search-box input {
     border: none;
     outline: none;
     border-bottom: 2px solid rgba(0,0,0, .75);
     padding: .25em;
 }
+/* end search group ========================== */
 
+.book-card {
+    width: 150px;
+    height: 200px;
+    border: 1px solid black;
+    border-left: 10px solid black;
+    display: flex;
+    flex-direction: column;
+    margin: 1em;
+    box-shadow: 1px 1px 12px rgba(0,0,0,.25);
+}
+.status-group {
+    margin-top: auto;
+    font-size: .8em;
+    display: flex;
+    flex-direction: column;
+}
+.book-title,
+.book-author,
+.year,
+.remove-book-button {
+    margin-left: 1em;
+}
+.book-card button {
+    width: 120px;
+    border: none;
+    height: 2em;
+    margin: auto auto .5em auto;
+    background: rgba(0,0,0,.75);
+    color: white;
+    cursor: pointer;
+}
