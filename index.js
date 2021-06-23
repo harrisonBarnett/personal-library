@@ -40,18 +40,19 @@ function Book(title, author, year, read) {
     this.year = year;
     this.read = read;
 }
-
+// takes post data from the "add" form and creates an 
+// entry in the db
 function addBook() {
     const form = document.querySelector('form');
     const data = Object.fromEntries(new FormData(form).entries());
-    console.log(data);
+    // console.log(data);
     const title = data.title;
     const author = data.author;
     const year = data.year;
     const read = data.read;
 
     let status = true;
-    if(typeof read === "undefined") {
+    if(typeof read === "undefined") { // checkbox value
         status = false;
     }
 
@@ -112,14 +113,32 @@ function toggleAddForm() {
         form.style.display = "none";
     }
 }
+// changes color/innertext of read/unread status button on book cards
+// sets status of the book to "read" in the db
 document.addEventListener('click', function(e) {
     if (e.target.className == 'status-button unread-status-button') {
         e.target.className = 'status-button read-status-button';
         e.target.innerHTML = "Read";
+        var s = trimTitle(e);
+        updateReadStatus(s, true);        
     } else if (e.target.className == 'status-button read-status-button') {
         e.target.className = 'status-button unread-status-button';
         e.target.innerHTML = "Unread";
+        var s = trimTitle(e);
+        updateReadStatus(s, false);
     }
 });
-
+function trimTitle(e) {
+    return e.target.previousSibling.previousSibling.previousSibling.innerHTML.substr(7).trim();
+}
+// updates the "read" status to true/false in the db
+function updateReadStatus(title, status) {
+    books.orderByChild('title')
+        .equalTo(title)
+        .once('value', function (snapshot) {
+            snapshot.forEach(function(child) {
+                child.ref.update({read: status})
+            });
+        });
+}
 
