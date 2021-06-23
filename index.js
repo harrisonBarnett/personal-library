@@ -13,8 +13,7 @@ const firebaseConfig = {
   // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-const db = firebase.database().ref();
-const books = db.child('books'); // query all books
+const books = firebase.database().ref('books');
 
 const bookContainer = document.getElementById('book-container');
 const myLibrary = [];
