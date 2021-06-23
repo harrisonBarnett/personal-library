@@ -1,0 +1,10 @@
+{
+    "books": [
+        {
+            "title": "",
+            "author": "",
+            "year": 0,
+            "read": false
+        }
+    ]
+}

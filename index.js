@@ -1,22 +1,72 @@
+
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyBVhouISGiJrZaV_hmzBItSwXtRbbxK34o",
+    authDomain: "mylibrary-26517.firebaseapp.com",
+    databaseURL: "https://mylibrary-26517-default-rtdb.firebaseio.com",
+    projectId: "mylibrary-26517",
+    storageBucket: "mylibrary-26517.appspot.com",
+    messagingSenderId: "706953740885",
+    appId: "1:706953740885:web:0577b51f7bf5a941d30adc"
+};
+  // Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.database().ref();
+const books = db.child('books'); // query all books
+
 const bookContainer = document.getElementById('book-container');
 const myLibrary = [];
 
-function Book(title, author, year) {
+books.once("value") 
+    .then(function(snapshot) { // iterate books
+        snapshot.forEach(function(childSnapshot) { // iterate elements of book
+            var key = childSnapshot.key;
+            if(childSnapshot.val().year == 9999) {
+                return;
+            } else {
+                var title = childSnapshot.val().title; 
+                var author = childSnapshot.val().author;
+                var year = childSnapshot.val().year;
+                var read = childSnapshot.val().read;
+
+                let book = new Book(title, author, year, read);
+                myLibrary.push(book);
+            }
+        });
+    });
+
+function Book(title, author, year, read) {
     this.title = title;
     this.author = author;
     this.year = year;
-    this.read = false;
+    this.read = read;
 }
+function addBook() {
+    const form = document.querySelector('form');
+    const data = Object.fromEntries(new FormData(form).entries());
+    console.log(data);
+    const title = data.title;
+    const author = data.author;
+    const year = data.year;
+    const read = data.read;
 
-let book1 = new Book("book1", "author1", 1111);
-let book2 = new Book("book2", "author2", 2222);
-let book3 = new Book("book3", "author3", 3333);
-let erin = new Book("erin", "barnett", 1990);
+    let status = true;
+    if(typeof read === "undefined") {
+        status = false;
+    }
 
-myLibrary.push(book1);
-myLibrary.push(book2);
-myLibrary.push(book3);
-myLibrary.push(erin);
+    var newBooksRef = books.push({
+        title: title,
+        author: author,
+        year: year,
+        read: status
+    });
+
+    book = new Book(title, author, year);
+    myLibrary.push(book);
+}
 
 function displayBook(book) {
     let div = document.createElement("div");
@@ -33,7 +83,7 @@ function displayBook(book) {
     year.innerHTML = "published: " + book.year;
 
     let status = document.createElement("button");
-    if(!book.read) {
+    if(book.read == false) {
         status.className = "status-button unread-status-button";
         status.innerHTML = "Unread";
     } else {
@@ -64,21 +114,5 @@ function toggleAddForm() {
         form.style.display = "none";
     }
 }
-function addBook() {
-    const form = document.querySelector('form');
-    const data = Object.fromEntries(new FormData(form).entries());
-    console.log(data);
-    const title = data.title;
-    const author = data.author;
-    const year = data.year;
-    const read = data.read;
 
-    const book = new Book(title, author, year);
-    if(read == "on") {
-        book.read = true;
-    } else {
-        book.read = false;
-    }
-    myLibrary.push(book);
-}
 

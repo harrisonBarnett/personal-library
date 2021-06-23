@@ -32,10 +32,7 @@
                 <input type="checkbox" class="add-read" name="read">
                 <label for="read">Read</label>
             </div>
-            <div class="unread-group">
-                <input type="checkbox" class="add-unread" name="unread">
-                <label for="unread">Not read</label>
-            </div>
+            
             <button class="add-book-submit" onclick="addBook()">Add book</button>
         </form>
     </div>
@@ -54,7 +51,9 @@
     <div class="book-container" id="book-container">
         <!-- books will be displayed in a column here -->
     </div>
-
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<!-- ALSO FOR SOME WEIRD FUCKIN REASON YOU GOTTA REMOVE '-APP' FROM THE BELOW SCRIPT -->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase.js"></script>
 <script src="index.js"></script>
 
 </body>

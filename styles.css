@@ -94,6 +94,7 @@ form button,
 .search-box input {
     border: none;
     outline: none;
+    width: 50vw;
     border-bottom: 2px solid rgba(0,0,0, .75);
     padding: .25em;
 }
@@ -105,7 +106,7 @@ form button,
 }
 .book-card {
     width: 150px;
-    height: 200px;
+    min-height: 200px;
     border: 1px solid black;
     border-left: 10px solid black;
     display: flex;
