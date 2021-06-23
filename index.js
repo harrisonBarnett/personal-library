@@ -1,5 +1,3 @@
-
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBVhouISGiJrZaV_hmzBItSwXtRbbxK34o",
@@ -42,6 +40,7 @@ function Book(title, author, year, read) {
     this.year = year;
     this.read = read;
 }
+
 function addBook() {
     const form = document.querySelector('form');
     const data = Object.fromEntries(new FormData(form).entries());
@@ -90,11 +89,11 @@ function displayBook(book) {
         status.innerHTML = "Read";
     }
 
-    let remove = document.createElement("button");
-    remove.className = "remove-book-button";
-    remove.innerHTML = "Remove";
+    let removeBtn = document.createElement("button");
+    removeBtn.className = "remove-book-button";
+    removeBtn.innerHTML = "Remove";
 
-    div.append(title, author, year, status, remove);
+    div.append(title, author, year, status, removeBtn);
 
     bookContainer.appendChild(div);
 }
@@ -102,7 +101,7 @@ function displayBook(book) {
 function displayAll() {
     myLibrary.forEach(book => {
         displayBook(book);
-    })
+    });
 }
 
 function toggleAddForm() {
@@ -113,5 +112,14 @@ function toggleAddForm() {
         form.style.display = "none";
     }
 }
+document.addEventListener('click', function(e) {
+    if (e.target.className == 'status-button unread-status-button') {
+        e.target.className = 'status-button read-status-button';
+        e.target.innerHTML = "Read";
+    } else if (e.target.className == 'status-button read-status-button') {
+        e.target.className = 'status-button unread-status-button';
+        e.target.innerHTML = "Unread";
+    }
+});
 
 
