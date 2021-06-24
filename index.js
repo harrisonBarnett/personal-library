@@ -12,27 +12,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const books = firebase.database().ref('books');
-
 const bookContainer = document.getElementById('book-container');
-const myLibrary = [];
-
-books.once("value") 
-    .then(function(snapshot) { // iterate books
-        snapshot.forEach(function(childSnapshot) { // iterate elements of book
-            var key = childSnapshot.key;
-            if(childSnapshot.val().year == 9999) {
-                return;
-            } else {
-                var title = childSnapshot.val().title; 
-                var author = childSnapshot.val().author;
-                var year = childSnapshot.val().year;
-                var read = childSnapshot.val().read;
-
-                let book = new Book(title, author, year, read);
-                myLibrary.push(book);
-            }
-        });
-    });
 
 function Book(title, author, year, read) {
     this.title = title;
@@ -43,7 +23,7 @@ function Book(title, author, year, read) {
 // takes post data from the "add" form and creates an 
 // entry in the db
 function addBook() {
-    const form = document.querySelector('form');
+    const form = document.querySelector('.add-book-form');
     const data = Object.fromEntries(new FormData(form).entries());
     // console.log(data);
     const title = data.title.toUpperCase();
@@ -62,9 +42,28 @@ function addBook() {
         year: year,
         read: status
     });
-
-    book = new Book(title, author, year);
-    myLibrary.push(book);
+}
+// add event to 'remove' button
+function trimTitleRemove(e) {
+    return e.target.previousSibling.previousSibling.previousSibling.previousSibling.innerHTML.substr(7).trim();
+}
+document.addEventListener('click', function(e) {
+    if(e.target.className == 'remove-book-button') {
+        var s = trimTitleRemove(e);
+        console.log(s);
+        e.target.innerHTML = "hello";
+        removeBook(s);
+    }
+})
+// query db on title and remove
+function removeBook(title){
+    books.orderByChild('title')
+        .equalTo(title)
+        .once('value', function (snapshot) {
+            snapshot.forEach(function(child) {
+                child.ref.remove();
+            });
+        });
 }
 
 function displayBook(book) {
@@ -101,7 +100,6 @@ function displayBook(book) {
 
 function displayAll() {
     removeAll();
-
     books.once("value") 
     .then(function(snapshot) { // iterate books
         snapshot.forEach(function(childSnapshot) { // iterate elements of book
@@ -132,41 +130,7 @@ function toggleAddForm() {
         form.style.display = "none";
     }
 }
-// changes color/innertext of read/unread status button on book cards
-// sets status of the book to "read" in the db
-function trimTitle(e) {
-    return e.target.previousSibling.previousSibling.previousSibling.innerHTML.substr(7).trim();
-}
-document.addEventListener('click', function(e) {
-    if (e.target.className == 'status-button unread-status-button') {
-        e.target.className = 'status-button read-status-button';
-        e.target.innerHTML = "Read";
-        var s = trimTitle(e);
-        updateReadStatus(s, true);        
-    } else if (e.target.className == 'status-button read-status-button') {
-        e.target.className = 'status-button unread-status-button';
-        e.target.innerHTML = "Unread";
-        var s = trimTitle(e);
-        updateReadStatus(s, false);
-    }
-});
-function findBooks(query) {
-    query = query.toUpperCase();
-    books.once("value") 
-    .then(function(snapshot) { // iterate books
-        snapshot.forEach(function(childSnapshot) { // iterate elements of book
-            var title = childSnapshot.val().title;
-            var author = childSnapshot.val().author;
-            var year = childSnapshot.val().year;
-            var read = childSnapshot.val().read;
 
-            if(title.includes(query) || author.includes(query)) {
-                const book = new Book(title, author, year, read);
-                displayBook(book);
-            }
-        });
-    });
-}
 // updates the "read" status to true/false in the db
 function updateReadStatus(title, status) {
     books.orderByChild('title')
@@ -177,4 +141,33 @@ function updateReadStatus(title, status) {
             });
         });
 }
+// changes color/innertext of read/unread status button on book cards
+// sets status of the book to "read" in the db
+function trimTitleRead(e, elements) {
+    return e.target.previousSibling.previousSibling.previousSibling.innerHTML.substr(7).trim();
+    
+}
+document.addEventListener('click', function(e) {
+    if (e.target.className == 'status-button unread-status-button') {
+        e.target.className = 'status-button read-status-button';
+        e.target.innerHTML = "Read";
+        var s = trimTitleRead(e, 7);
+        updateReadStatus(s, true);        
+    } else if (e.target.className == 'status-button read-status-button') {
+        e.target.className = 'status-button unread-status-button';
+        e.target.innerHTML = "Unread";
+        var s = trimTitleRead(e);
+        updateReadStatus(s, false);
+    }
+});
+// query the db for the search query to display all books 
+// if title or author match
+function findBooks() {
+    const form = document.querySelector('.search-box-form');
+    const data = Object.fromEntries(new FormData(form).entries());
+    // console.log(data);
+    const query = data.query.toUpperCase();
+}
+
+
 
