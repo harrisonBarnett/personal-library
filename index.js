@@ -100,8 +100,22 @@ function displayBook(book) {
 }
 
 function displayAll() {
-    myLibrary.forEach(book => {
-        displayBook(book);
+    removeAll();
+
+    books.once("value") 
+    .then(function(snapshot) { // iterate books
+        snapshot.forEach(function(childSnapshot) { // iterate elements of book
+            var title = childSnapshot.val().title;
+            var author = childSnapshot.val().author;
+            var year = childSnapshot.val().year;
+            var read = childSnapshot.val().read;
+            if(year === 9999) {
+                return;
+            } else {
+            const book = new Book(title, author, year, read);
+            displayBook(book);
+            }
+        });
     });
 }
 function removeAll() {
@@ -136,7 +150,23 @@ document.addEventListener('click', function(e) {
         updateReadStatus(s, false);
     }
 });
+function findBooks(query) {
+    query = query.toUpperCase();
+    books.once("value") 
+    .then(function(snapshot) { // iterate books
+        snapshot.forEach(function(childSnapshot) { // iterate elements of book
+            var title = childSnapshot.val().title;
+            var author = childSnapshot.val().author;
+            var year = childSnapshot.val().year;
+            var read = childSnapshot.val().read;
 
+            if(title.includes(query) || author.includes(query)) {
+                const book = new Book(title, author, year, read);
+                displayBook(book);
+            }
+        });
+    });
+}
 // updates the "read" status to true/false in the db
 function updateReadStatus(title, status) {
     books.orderByChild('title')
