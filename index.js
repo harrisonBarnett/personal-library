@@ -14,58 +14,17 @@ firebase.initializeApp(firebaseConfig);
 const books = firebase.database().ref('books');
 const bookContainer = document.getElementById('book-container');
 
+// the book object
 function Book(title, author, year, read) {
     this.title = title;
     this.author = author;
     this.year = year;
     this.read = read;
 }
-// takes post data from the "add" form and creates an 
-// entry in the db
-function addBook() {
-    const form = document.querySelector('.add-book-form');
-    const data = Object.fromEntries(new FormData(form).entries());
-    // console.log(data);
-    const title = data.title.toUpperCase();
-    const author = data.author.toUpperCase();
-    const year = data.year;
-    const read = data.read;
 
-    let status = true;
-    if(typeof read === "undefined") { // checkbox value
-        status = false;
-    }
-
-    var newBooksRef = books.push({
-        title: title,
-        author: author,
-        year: year,
-        read: status
-    });
-}
-// add event to 'remove' button
-function trimTitleRemove(e) {
-    return e.target.previousSibling.previousSibling.previousSibling.previousSibling.innerHTML.substr(7).trim();
-}
-document.addEventListener('click', function(e) {
-    if(e.target.className == 'remove-book-button') {
-        var s = trimTitleRemove(e);
-        console.log(s);
-        e.target.innerHTML = "hello";
-        removeBook(s);
-    }
-})
-// query db on title and remove
-function removeBook(title){
-    books.orderByChild('title')
-        .equalTo(title)
-        .once('value', function (snapshot) {
-            snapshot.forEach(function(child) {
-                child.ref.remove();
-            });
-        });
-}
-
+//*****************************
+// DA DISPLAY/CLEAR ZONE
+//*****************************
 function displayBook(book) {
     let div = document.createElement("div");
     div.className = "book-card";
@@ -97,7 +56,8 @@ function displayBook(book) {
 
     bookContainer.appendChild(div);
 }
-
+// queries the db and creates a book object
+// of each entry and calls displayBook()
 function displayAll() {
     removeAll();
     books.once("value") 
@@ -116,12 +76,42 @@ function displayAll() {
         });
     });
 }
+// search the DOM for all book cards and remove them
 function removeAll() {
     const books = document.querySelectorAll('.book-card');
     books.forEach(book => {
         book.remove();
     })
 }
+
+// query db on title and remove
+function removeBook(title){
+    books.orderByChild('title')
+        .equalTo(title)
+        .once('value', function (snapshot) {
+            snapshot.forEach(function(child) {
+                child.ref.remove();
+            });
+        });
+}
+// helper fxn
+function trimTitleRemove(e) {
+    return e.target.previousSibling.previousSibling.previousSibling.previousSibling.innerHTML.substr(7).trim();
+}
+// add an event to call removeBook()
+document.addEventListener('click', function(e) {
+    if(e.target.className == 'remove-book-button') {
+        var s = trimTitleRemove(e);
+        console.log(s);
+        e.target.innerHTML = "hello";
+        removeBook(s);
+    }
+})
+
+//*****************************
+// DA ADD BOOK ZONE
+//*****************************
+// toggles the addBook() form on and off
 function toggleAddForm() {
     var form = document.getElementById("show-hide-toggle");
     if(form.style.display === "none") {
@@ -130,7 +120,33 @@ function toggleAddForm() {
         form.style.display = "none";
     }
 }
+// takes post data from the "add" form and creates an 
+// entry in the db
+function addBook() {
+    const form = document.querySelector('.add-book-form');
+    const data = Object.fromEntries(new FormData(form).entries());
+    // console.log(data);
+    const title = data.title.toUpperCase();
+    const author = data.author.toUpperCase();
+    const year = data.year;
+    const read = data.read;
 
+    let status = true;
+    if(typeof read === "undefined") { // checkbox value
+        status = false;
+    }
+
+    var newBooksRef = books.push({
+        title: title,
+        author: author,
+        year: year,
+        read: status
+    });
+}
+
+//*****************************
+// DA UPDATE READ STATUS ZONE
+//*****************************
 // updates the "read" status to true/false in the db
 function updateReadStatus(title, status) {
     books.orderByChild('title')
@@ -141,12 +157,12 @@ function updateReadStatus(title, status) {
             });
         });
 }
-// changes color/innertext of read/unread status button on book cards
-// sets status of the book to "read" in the db
+// helper fxn
 function trimTitleRead(e, elements) {
     return e.target.previousSibling.previousSibling.previousSibling.innerHTML.substr(7).trim();
     
 }
+// adds an event to call updateReadStatus()
 document.addEventListener('click', function(e) {
     if (e.target.className == 'status-button unread-status-button') {
         e.target.className = 'status-button read-status-button';
@@ -160,14 +176,7 @@ document.addEventListener('click', function(e) {
         updateReadStatus(s, false);
     }
 });
-// query the db for the search query to display all books 
-// if title or author match
-function findBooks() {
-    const form = document.querySelector('.search-box-form');
-    const data = Object.fromEntries(new FormData(form).entries());
-    // console.log(data);
-    const query = data.query.toUpperCase();
-}
+
 
 
 

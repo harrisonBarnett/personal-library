@@ -7,6 +7,7 @@ body {
 .nav-bar {
     background: rgba(0,0,0,.75);
     box-shadow: 1px 1px 10px rgba(0,0,0,.5);
+    padding: .5em 0;
 }
 .nav-list {
     margin: 0 1em;
@@ -19,21 +20,7 @@ body {
     color: white;
     cursor: pointer;
 }
-.nav-search-box {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-}
-.nav-search-box p {
-    margin-left: 1em;
-    color: white;
-}
-.nav-search-box input {
-    outline: none;
-    height: 1em;
-    border: none;
-}
-body > div > ul > li {
+.nav-list li {
     margin-left: 1em;
 }
 /* end nav bar=============================== */
@@ -71,38 +58,19 @@ form button,
 .title-group {
     text-align: center;
 }
+.welcome-text {
+    margin: 0 auto;
+    width: 50%;
+    line-height: 2.8;
+}
 /* end title ================================ */
 
-/* SEARCH GROUP ============================= */
-.search-box {
-    display: flex;
-    justify-content: center;
-}
-.search-box button {
-    border: none;
-    width: 120px;
-    height: 2em;
-    cursor: pointer;
-    background: rgba(0,0,0,.75);
-    color: white;
-    font-family: monospace;
-}
-.search-box input,
-.search-box button {
-    margin: 0 1em;
-}
-.search-box input {
-    border: none;
-    outline: none;
-    width: 50vw;
-    border-bottom: 2px solid rgba(0,0,0, .75);
-    padding: .25em;
-}
-/* end search group ========================== */
 
 /* BOOK CARD ================================= */
 .book-container {
-    margin-top: 25vh;
+    margin-top: 15vh;
+    display: flex;
+    flex-wrap: wrap;
 }
 .book-card {
     width: 150px;

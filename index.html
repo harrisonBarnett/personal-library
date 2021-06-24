@@ -14,10 +14,6 @@
             <li class='nav-add-button' onclick="toggleAddForm()">Add</li>
             <li class='nav-list-button' onclick="displayAll()">List</li>
             <li class='nav-list-button' onclick="removeAll()">Clear</li>
-            <div class="nav-search-box">
-                <input type="text" class="nav-search-box-input">
-                <p class="nav-search-button">X</p>
-            </div>
         </ul>
     </div>
 
@@ -42,15 +38,10 @@
         <h1 class="title">Library</h1>
     </div>
 
-    <div class="search-box">
-        <form class="search-box-form">
-            <input type="text" 
-            class="search-box-input"
-            placeholder="Search by title..."
-            name="query">
-            <button class="search-button" onclick="findBooks()">Search</button>
-        </form>
-    </div>
+    <p class="welcome-text">welcome to The Library. you may add books to the library,
+        and you may remove books from the library. try listing and clearing the contents
+        of the library database. keep in mind, we are all sharing these books. the "read"
+    status of a given book may or may not reflect your lived experience.</p>
 
     <div class="book-container" id="book-container">
         <!-- books will be displayed in a column here -->
