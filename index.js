@@ -63,10 +63,10 @@ function displayAll() {
     books.once("value") 
     .then(function(snapshot) { // iterate books
         snapshot.forEach(function(childSnapshot) { // iterate elements of book
-            var title = childSnapshot.val().title;
-            var author = childSnapshot.val().author;
-            var year = childSnapshot.val().year;
-            var read = childSnapshot.val().read;
+            const title = childSnapshot.val().title;
+            const author = childSnapshot.val().author;
+            const year = childSnapshot.val().year;
+            const read = childSnapshot.val().read;
             if(year === 9999) {
                 return;
             } else {
@@ -101,7 +101,7 @@ function trimTitleRemove(e) {
 // add an event to call removeBook()
 document.addEventListener('click', function(e) {
     if(e.target.className == 'remove-book-button') {
-        var s = trimTitleRemove(e);
+        const s = trimTitleRemove(e);
         console.log(s);
         e.target.innerHTML = "hello";
         removeBook(s);
@@ -113,7 +113,7 @@ document.addEventListener('click', function(e) {
 //*****************************
 // toggles the addBook() form on and off
 function toggleAddForm() {
-    var form = document.getElementById("show-hide-toggle");
+    const form = document.getElementById("show-hide-toggle");
     if(form.style.display === "none") {
         form.style.display = "block";
     } else {
@@ -136,7 +136,7 @@ function addBook() {
         status = false;
     }
 
-    var newBooksRef = books.push({
+    const newBooksRef = books.push({
         title: title,
         author: author,
         year: year,
@@ -167,12 +167,12 @@ document.addEventListener('click', function(e) {
     if (e.target.className == 'status-button unread-status-button') {
         e.target.className = 'status-button read-status-button';
         e.target.innerHTML = "Read";
-        var s = trimTitleRead(e, 7);
+        let s = trimTitleRead(e, 7);
         updateReadStatus(s, true);        
     } else if (e.target.className == 'status-button read-status-button') {
         e.target.className = 'status-button unread-status-button';
         e.target.innerHTML = "Unread";
-        var s = trimTitleRead(e);
+        let s = trimTitleRead(e);
         updateReadStatus(s, false);
     }
 });
