@@ -33,7 +33,7 @@ body {
     height: 1em;
     border: none;
 }
-body > div > ul > li:nth-child(2) {
+body > div > ul > li {
     margin-left: 1em;
 }
 /* end nav bar=============================== */
