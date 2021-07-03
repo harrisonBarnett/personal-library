@@ -15,11 +15,21 @@ const books = firebase.database().ref('books');
 const bookContainer = document.getElementById('book-container');
 
 // the book object
-function Book(title, author, year, read) {
-    this.title = title;
-    this.author = author;
-    this.year = year;
-    this.read = read;
+// function Book(title, author, year, read) {
+//     this.title = title;
+//     this.author = author;
+//     this.year = year;
+//     this.read = read;
+// }
+
+// the book class
+class Book {
+    constructor(title, author, year, read) {
+        this.title = title;
+        this.author = author;
+        this.year = year;
+        this.read = read;
+    }
 }
 
 //*****************************
